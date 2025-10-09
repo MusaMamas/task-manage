@@ -69,11 +69,15 @@ docker run -d \
   -p 5433:5432 \
   postgres:18-alpine
 ```
-### 3. Run backend
+### 3. .env files
+- Copy `.env.example` to `.env` both in frontend and backend.
+This creates a real `.env` file that your app will use.
+
+### 4. Run backend
 ```bash
 npm run dev:backend
 ```
-### 4. Run frontend
+### 5. Run frontend
 ```bash
 npm run dev:frontend
 ```
