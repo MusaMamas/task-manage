@@ -1,6 +1,6 @@
 # Task Management System - DevOps Project
 
-TODO: Käännetään tämä myös suomenkieliseksi README_fi.md tiedostoon.
+**TODO** Käännetään tämä myös suomenkieliseksi README_fi.md tiedostoon.
 
 A full-stack task management application built for learning DevOps practices including CI/CD pipelines, containerization, and cloud deployment.
 
@@ -28,7 +28,7 @@ A full-stack task management application built for learning DevOps practices inc
 - React Router
 - Axios
 
-## Getting Started
+# Project Tasks
 
 ### Prerequisites
 
@@ -42,7 +42,7 @@ A full-stack task management application built for learning DevOps practices inc
 - Backend: `5000`
 - Database: `5432`
 
-## Run Task manager Locally
+## Task 1. Run Task manager Locally
 
  It is recommended to run the application locally before starting CI/CD to quickly identify and resolve issues in the development environment. Running locally allows you to verify basic functionality, catch errors early, and ensure dependencies are correctly configured.
 
@@ -111,47 +111,54 @@ The application will be available at:
 - Backend: http://localhost:5000
 - Database: localhost:5432
 
-## Tasks
+## Task 2. Implement CI pipeline
 
-Your goal is to implement a CI/CD pipeline for the Task Management System:
+Your goal is to implement a CI pipeline for the Task Management System:
 
-1. **Set Up a CI/CD Workflow:** (1 points)
+1. **Set Up a CI Workflow:**
    - Use GitHub Actions to automate your workflow.
    - The pipeline should run on every push and pull request to the main branch.
 
-2. **Automate Testing and Linting:** (1 points)
+2. **Automate Testing and Linting:**
    - Configure the pipeline to run backend and frontend tests.
    - Add a linter step to check code quality.
   
-   Tähän voisi lisätä linkin npm workspaces osioon ja myös antaa vinkkiä miten voi job:ssa määritellä kansion missä komento suoritetaan esim.
-    ```  
-      - name: Install dependencies
-        working-directory: ./backend
-        run: npm install
-    ```
-   Ei suoraa esimerkkiä mutta mainita working-directory ja laittaa linkki dokumentaatioon.
-   
+   > **Tip:** This project uses [npm workspaces](https://docs.npmjs.com/cli/v10/using-npm/workspaces), you can run commands in specific subdirectories by setting the [`working-directory`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsworking-directory) property in your GitHub Actions job step. For example:
+   > ```yaml
+   > - name: Install dependencies
+   >   working-directory: ./backend
+   >   run: npm install
+   > ```
+   > 
+   > Review the `package.json` files in the root directory to see the available scripts for each part of the CI pipeline.
+
    **HUOM** Coverage testin ajaminen ja tuloksen vieminen artifactina voisi olla kiva lisä. Täytyy ihmetellä tuota.
 
-4. **Security** (1 points)
-   - Integrate CodeQL analysis in the CI/CD pipeline to automatically scan for vulnerabilities.
-   - Add steps to check for outdated or vulnerable dependencies using tools like `npm audit`.
+## Task 3. Security 
+   1. **Static code analysis & dependencies**
+      - Integrate CodeQL analysis in the CI/CD pipeline to automatically scan for vulnerabilities.
+      - Add steps to check for outdated or vulnerable dependencies using tools like `npm audit`.
    
    **HUOM** Nyt token on tallennettu selaimen localstorage:en josta varamasti tulee CodeQL hälytys. Tuo pitäisi muuttaa HttpOnly cookieksi.
 
-5. **Docker Integration:** (3 points)
+## Task 4. Docker Integration
    - Build Docker images for the backend and frontend as part of the pipeline.
    - Optionally, push images to a container registry.
 
-6. **Deployment:** (3 points)
-   - Automate deployment to a cloud service (e.g., Render, Rahti).
+## Task 5. Deployment to Render.com
 
-7. **Monitoring** (2 points)
-   - SOMETHING SIMPLE HERE
-   Bäkkärissä on health check url
-   Lokituksen monitorointi?
+1. **PostgreSQL database** 
+   - Create postgreSQL database to render.com
+2. **Backend** 
+   - Create Web Service for the backend
+3. **Frontend**
+   - Create Static site for the frontend
 
-PISTEYTYS ON ALUSTAVA...TUO TÄYTYY MYÖS MIETTIÄ
+## Task 6. Monitoring
+- SOMETHING SIMPLE HERE: Bäkkärissä on health check url. Lokituksen monitorointi?
+
+
+**TODO** PISTEYTYS TASKEILLE
 
 ## Tips for Getting Started
 
