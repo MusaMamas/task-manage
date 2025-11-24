@@ -40,3 +40,11 @@ jobs:
       # TURVASKANNAUS
       - name: Audit dependencies
         run: npm audit --audit-level=high
+
+      # Docker-build backendille
+      - name: Build backend Docker image
+        run: docker build -t taskmanager-backend ./backend
+
+      # Docker-build frontendille
+      - name: Build frontend Docker image
+        run: docker build -t taskmanager-frontend ./frontend
