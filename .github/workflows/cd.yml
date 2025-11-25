@@ -1,0 +1,58 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_BACKEND: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/taskmanager-backend
+      IMAGE_FRONTEND: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/taskmanager-frontend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build & push backend image
+      - name: Build backend image
+        run: |
+          docker build -t $IMAGE_BACKEND:latest ./backend
+      - name: Push backend image
+        run: |
+          docker push $IMAGE_BACKEND:latest
+
+      # Build & push frontend image (with prod API URL)
+      - name: Build frontend image
+        run: |
+          docker build \
+            -t $IMAGE_FRONTEND:latest \
+            --build-arg VITE_API_URL=${{ secrets.VITE_API_URL_PROD }} \
+            ./frontend
+
+      - name: Push frontend image
+        run: |
+          docker push $IMAGE_FRONTEND:latest
+
+      # Trigger deploys on Render
+      - name: Deploy backend on Render
+        run: |
+          curl -X POST "${{ secrets.RENDER_BACKEND_HOOK_URL }}"
+
+      - name: Deploy frontend on Render
+        run: |
+          curl -X POST "${{ secrets.RENDER_FRONTEND_HOOK_URL }}"
